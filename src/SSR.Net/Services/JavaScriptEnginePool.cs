@@ -36,19 +36,30 @@ namespace SSR.Net.Services
 
         public virtual string EvaluateJs(string js, int timeoutMs = 200) {
             var engine = GetEngine(timeoutMs);
+            
             if (engine is null)
+            {
                 throw new AcquireJavaScriptEngineTimeoutException($"Could not acquire engine within {timeoutMs}ms");
+            }
+            
             return engine.EvaluateAndRelease(js);
         }
 
-        public virtual string EvaluateJsAsync(string js, string resultVariableName, int asyncTimeoutMs = 200, int timeoutMs = 200)
+        public virtual string EvaluateAsyncJs(string js, string resultVariableName, int asyncTimeoutMs = 200, int timeoutMs = 200)
         {
             var engine = GetEngine(timeoutMs);
+            
             if (engine is null)
+            {
                 throw new AcquireJavaScriptEngineTimeoutException($"Could not acquire engine within {timeoutMs}ms");
+            }
+            
             var result = engine.EvaluateAsyncAndRelease(js, resultVariableName, asyncTimeoutMs);
+            
             if (!string.IsNullOrEmpty(result))
+            {
                 return result;
+            }
             throw new Exception($"Could not evaluate async result within {asyncTimeoutMs}ms");
         }
 
