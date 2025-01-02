@@ -14,6 +14,7 @@ namespace SSR.Net.Services
         private const string SSRHtml = "<div id=\"{0}\">{1}</div>";//id, html
         private const string CSRHtml = "<div id=\"{0}\"></div>";//id
         private const string SSREngineScript = "ReactDOMServer.renderToString(React.createElement({0},{1}))";//componentName, propsAsJson
+        //private const string SSREngineScript = "ReactDOMServer.renderToStaticMarkup(React.createElement({0},{1}))";
         private const string ClientHydrateScript = "ReactDOMClient.hydrateRoot({0}, React.createElement({1},{2}))";//id, componentName, propsAsJson
         private const string ClientRenderScript = "ReactDOMClient.createRoot({0}).render(React.createElement({1},{2}))";//id, componentName, propsAsJson
 
@@ -62,6 +63,6 @@ namespace SSR.Net.Services
         }
 
         private static string CreateId() =>
-            "react_" + Guid.NewGuid().ToString().Replace("-", "");
+            $"react_" + Guid.NewGuid().ToString().Replace("-", "");
     }
 }
