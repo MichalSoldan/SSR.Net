@@ -6,12 +6,26 @@ namespace SSR.Net.Services
     public class JavaScriptEnginePoolConfig
     {
         public List<string> Scripts { get; private set; } = new List<string>();
+        public Dictionary<string, Type> HostTypes { get; private set; } = new Dictionary<string, Type>();
+        public Dictionary<string, object> HostObjects { get; private set; } = new Dictionary<string, object>();
         public int MaxEngines { get; private set; } = 25;
         public int MinEngines { get; private set; } = 5;
         public int MaxUsages { get; private set; } = 100;
         public int GarbageCollectionInterval { get; private set; } = 20;
         public int StandbyEngineCount { get; private set; } = 3;
         public int ReconfigureTimeoutMs { get; private set; } = 2000;
+
+        public JavaScriptEnginePoolConfig AddHostType(string name, Type type)
+        {
+            HostTypes.Add(name, type);
+            return this;
+        }
+
+        public JavaScriptEnginePoolConfig AddHostObject(string name, object obj)
+        {
+            HostObjects.Add(name, obj);
+            return this;
+        }
 
         public JavaScriptEnginePoolConfig AddScriptFile(string path)
         {

@@ -12,6 +12,8 @@ namespace SSR.Net.Services
     public class JavaScriptEnginePool : IJavaScriptEnginePool
     {
         protected List<string> Scripts;
+        protected Dictionary<string, Type> HostTypes;
+        protected Dictionary<string, object> HostObjects;
         protected List<JavaScriptEngine> Engines = new List<JavaScriptEngine>();
         protected JsEngineSwitcher JsEngineSwitcher;
         protected int GarbageCollectionInterval = 20;
@@ -119,6 +121,8 @@ namespace SSR.Net.Services
                 MaxUsages = builtConfig.MaxUsages;
                 MaxEngines = builtConfig.MaxEngines;
                 MinEngines = builtConfig.MinEngines;
+                HostTypes = builtConfig.HostTypes;
+                HostObjects = builtConfig.HostObjects;
                 Scripts = builtConfig.Scripts;
                 StandbyEngineCount = builtConfig.StandbyEngineCount;
                 GarbageCollectionInterval = builtConfig.GarbageCollectionInterval;
@@ -152,6 +156,13 @@ namespace SSR.Net.Services
             Engines.Add(new JavaScriptEngine(() =>
             {
                 var jsEngine = JsEngineSwitcher.CreateDefaultEngine();
+
+                foreach (var entry in HostTypes)
+                    jsEngine.EmbedHostType(entry.Key, entry.Value);
+
+                foreach (var entry in HostObjects)
+                    jsEngine.EmbedHostObject(entry.Key, entry.Value);
+
                 Scripts.ForEach(jsEngine.Execute);
                 return jsEngine;
             }, MaxUsages, GarbageCollectionInterval, BundleNumber));
