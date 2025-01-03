@@ -72,8 +72,8 @@ namespace SSR.Net.Services
         public void Validate()
         {
             if (MinEngines <= 0)
-                throw new InvalidOperationException($"{nameof(MinEngines )} must be a positive integer, but is set to {MinEngines}");
-            if (MaxEngines < MinEngines) 
+                throw new InvalidOperationException($"{nameof(MinEngines)} must be a positive integer, but is set to {MinEngines}");
+            if (MaxEngines < MinEngines)
                 throw new InvalidOperationException($"{nameof(MaxEngines)} ({MaxEngines})must be at least as high as {nameof(MinEngines)} ({MinEngines})");
             if (StandbyEngineCount <= 0)
                 throw new InvalidOperationException($"{nameof(StandbyEngineCount)} must be a positive integer, but is set to {StandbyEngineCount}");
@@ -81,7 +81,7 @@ namespace SSR.Net.Services
                 throw new InvalidOperationException($"{nameof(GarbageCollectionInterval)} must be a positive integer, but is set to {GarbageCollectionInterval}");
             if (MaxUsages <= 0)
                 throw new InvalidOperationException($"{nameof(MaxUsages)} must be a positive integer, but is set to {MaxUsages}");
-            if (ReconfigureTimeoutMs  <= 0)
+            if (ReconfigureTimeoutMs <= 0)
                 throw new InvalidOperationException($"{nameof(ReconfigureTimeoutMs)} must be zero or higher, but is set to {ReconfigureTimeoutMs}");
         }
     }

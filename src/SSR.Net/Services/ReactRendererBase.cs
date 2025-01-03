@@ -33,7 +33,7 @@ namespace SSR.Net.Services
             {
                 if (!fallbackToClientSideRender)
                 {
-                    throw ex;
+                    throw;
                 }
                 return FallbackToCSRWithException(componentName, propsAsJson, ex);
             }

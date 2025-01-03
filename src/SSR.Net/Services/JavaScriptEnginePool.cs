@@ -174,7 +174,9 @@ namespace SSR.Net.Services
                 foreach (var entry in HostObjects)
                     jsEngine.EmbedHostObject(entry.Key, entry.Value);
 
-                Scripts.ForEach(jsEngine.Execute);
+                foreach (var script in Scripts)
+                    jsEngine.Execute(script);
+
                 return jsEngine;
             }, MaxUsages, GarbageCollectionInterval, BundleNumber));
 

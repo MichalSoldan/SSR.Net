@@ -1,14 +1,31 @@
-using SSR.Net.DotNet8.Services;
+using SSR.Net.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddReact17Renderer(builder.Environment);
-builder.Services.AddReact18Renderer(builder.Environment);
-builder.Services.AddReact19Renderer(builder.Environment);
-builder.Services.AddVue3Renderer(builder.Environment);
+builder.Services.AddReact17Renderer(config =>
+    config.AddScriptFile(Path.Combine(builder.Environment.WebRootPath, "react17example.js"))
+);
+
+builder.Services.AddReact18Renderer(config =>
+    config
+        .AddScriptFile(Path.Combine(builder.Environment.WebRootPath, "React18TextEncoderPolyfill.js"))
+        .AddScriptFile(Path.Combine(builder.Environment.WebRootPath, "react18example.js"))
+);
+
+builder.Services.AddReact19Renderer(config =>
+    config
+        .AddScriptFile(Path.Combine(builder.Environment.WebRootPath, "React19TextEncoderPolyfill.js"))
+        .AddScriptFile(Path.Combine(builder.Environment.WebRootPath, "React19MessageChannelPolyfill.js"))
+        .AddScriptFile(Path.Combine(builder.Environment.WebRootPath, "react19example.js"))
+);
+
+builder.Services.AddVue3Renderer(config =>
+    config
+        .AddScriptFile(Path.Combine(builder.Environment.WebRootPath, "vue3example.js"))
+);
 
 var app = builder.Build();
 
