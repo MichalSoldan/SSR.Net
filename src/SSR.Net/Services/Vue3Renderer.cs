@@ -5,7 +5,7 @@ using System;
 
 namespace SSR.Net.Services
 {
-    public class Vue3Renderer
+    public class Vue3Renderer : IVueRenderer
     {
         private readonly IJavaScriptEnginePool _javaScriptEnginePool;
 
@@ -15,6 +15,20 @@ namespace SSR.Net.Services
         protected virtual string SSRRenderScript => "renderToString(createSSRApp({0}, {1})).then(html => {2}= '<div id={3}>' + html + '</div>').catch(err => {2}= 'Error ' + err)";//componentName, propsAsJson, resultVariableName, containerId
         protected virtual string CSRHydrateScript => "createSSRApp({0}, {1}).mount({2})";//componentName, propsAsJson, id
         protected virtual string CSRRenderScript => "createApp({0}, {1}).mount({2})";//id, componentName, propsAsJson
+
+        public virtual RenderedComponent RenderComponent<T>(string componentName, T props, int waitForEngineTimeoutMs = 50, bool fallbackToClientSideRender = true, int asyncTimeoutMs = 200) where T : class, new()
+        {
+            System.Text.Json.JsonSerializerOptions options = new System.Text.Json.JsonSerializerOptions
+            {
+                PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase,
+                AllowTrailingCommas = true,
+                WriteIndented = false
+            };
+
+            var propsAsJson = System.Text.Json.JsonSerializer.Serialize(props, options);
+
+            return RenderComponent(componentName, propsAsJson, waitForEngineTimeoutMs, fallbackToClientSideRender, asyncTimeoutMs);
+        }
 
         public virtual RenderedComponent RenderComponent(string componentName, string propsAsJson, int waitForEngineTimeoutMs = 50, bool fallbackToClientSideRender = true, int asyncTimeoutMs = 200)
         {
