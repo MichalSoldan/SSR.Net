@@ -18,20 +18,6 @@ namespace SSR.Net.Services
         protected virtual string CSRHydrateScript => "ReactDOM.hydrate(React.createElement({2},{1}), {0})";//id, componentName, propsAsJson
         protected virtual string CSRRenderScript => "ReactDOM.render(React.createElement({2},{1}), {0})";//id, componentName, propsAsJson
 
-        public virtual RenderedComponent RenderComponent<T>(string componentName, T props, int waitForEngineTimeoutMs = 50, bool fallbackToClientSideRender = true) where T : class, new() 
-        {
-            System.Text.Json.JsonSerializerOptions options = new System.Text.Json.JsonSerializerOptions
-            {
-                PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase, 
-                AllowTrailingCommas = true,
-                WriteIndented = false
-            };
-
-            var propsAsJson = System.Text.Json.JsonSerializer.Serialize(props, options);
-
-            return RenderComponent(componentName, propsAsJson, waitForEngineTimeoutMs, fallbackToClientSideRender);
-        }
-
         public virtual RenderedComponent RenderComponent(string componentName, string propsAsJson, int waitForEngineTimeoutMs = 50, bool fallbackToClientSideRender = true)
         {
             var result = new RenderedComponent();
@@ -62,6 +48,20 @@ namespace SSR.Net.Services
             return result;
         }
 
+        public virtual RenderedComponent RenderComponent<T>(string componentName, T props, int waitForEngineTimeoutMs = 50, bool fallbackToClientSideRender = true) where T : class, new()
+        {
+            System.Text.Json.JsonSerializerOptions options = new System.Text.Json.JsonSerializerOptions
+            {
+                PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase,
+                AllowTrailingCommas = true,
+                WriteIndented = false
+            };
+
+            var propsAsJson = System.Text.Json.JsonSerializer.Serialize(props, options);
+
+            return RenderComponent(componentName, propsAsJson, waitForEngineTimeoutMs, fallbackToClientSideRender);
+        }
+
         public virtual RenderedComponent RenderComponentCSR(string componentName, string propsAsJson)
         {
             var id = CreateId();
@@ -70,6 +70,20 @@ namespace SSR.Net.Services
                 Html = string.Format(CSRHtml, id),
                 InitScript = string.Format(CSRRenderScript, id, componentName, propsAsJson)
             };
+        }
+
+        public virtual RenderedComponent RenderComponentCSR<T>(string componentName, T props) where T : class, new()
+        {
+            System.Text.Json.JsonSerializerOptions options = new System.Text.Json.JsonSerializerOptions
+            {
+                PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase,
+                AllowTrailingCommas = true,
+                WriteIndented = false
+            };
+
+            var propsAsJson = System.Text.Json.JsonSerializer.Serialize(props, options);
+
+            return RenderComponentCSR(componentName, propsAsJson);
         }
 
         protected virtual RenderedComponent FallbackToCSRWithException(string componentName, string propsAsJson, Exception ex)

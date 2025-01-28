@@ -4,15 +4,15 @@ using SSR.Net.Services;
 
 namespace SSR.Net.DotNet8.Controllers {
     public class HomeController : Controller {
-        private readonly React17Renderer _react17Renderer;
-        private readonly React18Renderer _react18Renderer;
-        private readonly React19Renderer _react19Renderer;
-        private readonly Vue3Renderer _vue3Renderer;
+        private readonly IReact17Renderer _react17Renderer;
+        private readonly IReact18Renderer _react18Renderer;
+        private readonly IReact19Renderer _react19Renderer;
+        private readonly IVue3Renderer _vue3Renderer;
 
-        public HomeController(React17Renderer react17Renderer,
-                              React18Renderer react18Renderer,
-                              React19Renderer react19Renderer,
-                              Vue3Renderer vue3Renderer) {
+        public HomeController(IReact17Renderer react17Renderer,
+                              IReact18Renderer react18Renderer,
+                              IReact19Renderer react19Renderer,
+                              IVue3Renderer vue3Renderer) {
             _react17Renderer = react17Renderer;
             _react18Renderer = react18Renderer;
             _react19Renderer = react19Renderer;
@@ -59,9 +59,11 @@ namespace SSR.Net.DotNet8.Controllers {
             return View(renderedComponent);
         }
 
-        public ActionResult React19() {
+        public ActionResult React19()
+        {
             var propsJson = JsonConvert.SerializeObject(
-                new {
+                new
+                {
                     header = "React 19 with SSR",
                     links = new[]{
                         new {
@@ -78,6 +80,29 @@ namespace SSR.Net.DotNet8.Controllers {
             return View(renderedComponent);
         }
 
+        public ActionResult ReactExtension()
+        {
+                var props = new InfoData
+                {
+                    header = "React 19 with SSR",
+                    links = 
+                    [
+                        new Link 
+                        {
+                            text = "Google.com",
+                            href = "https://www.google.com"
+                        },
+                        new Link 
+                        {
+                            text = "Hacker news",
+                            href = "https://news.ycombinator.org"
+                        }
+                    ]
+                };
+
+            return View(props);
+        }
+
         public ActionResult Vue3() {
             var propsJson = JsonConvert.SerializeObject(
                 new {
@@ -86,5 +111,17 @@ namespace SSR.Net.DotNet8.Controllers {
             var renderedComponent = _vue3Renderer.RenderComponent("Components.Example", propsJson);
             return View(renderedComponent);
         }
+    }
+
+    public class InfoData
+    { 
+        public string header { get; set; }
+        public Link[] links { get; set; }
+
+    }
+    public class Link
+    {
+        public string text { get; set; }
+        public string href { get; set; }
     }
 }

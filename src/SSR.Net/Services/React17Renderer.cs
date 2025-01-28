@@ -1,6 +1,6 @@
 ﻿namespace SSR.Net.Services
 {
-    public class React17Renderer : ReactRendererBase
+    public class React17Renderer : ReactRendererBase, IReact17Renderer
     {
         public React17Renderer(IJavaScriptEnginePool javaScriptEnginePool) : base(javaScriptEnginePool)
         {

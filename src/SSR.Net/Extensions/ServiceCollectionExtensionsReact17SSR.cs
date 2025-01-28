@@ -19,7 +19,7 @@ namespace SSR.Net.Extensions
             var renderer = new React17Renderer(pool);
 
             // register Renderer as singleton
-            services.AddSingleton<IReactRenderer>(renderer);
+            services.AddSingleton<IReact17Renderer>(renderer);
         }
     }
 }

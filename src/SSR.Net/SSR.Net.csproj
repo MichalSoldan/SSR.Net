@@ -2,16 +2,11 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net7.0;net8.0;net9.0</TargetFrameworks>
     <PackageId>SSR.Net</PackageId>
-    <Version>1.0.5</Version>
-    <Authors>Øivind Hagen</Authors>
-    <Company>Knowit AS</Company>
     <Product>SSR.Net</Product>
     <Title>SSR.Net</Title>
     <PackageIcon>Docs/Icon.png</PackageIcon>
     <PackageLicenseFile>content/Docs/LICENSE</PackageLicenseFile>
     <PackageReadmeFile>content/Docs/README.MD</PackageReadmeFile>
-    <PackageProjectUrl>https://github.com/knowit/SSR.Net</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/knowit/SSR.Net</RepositoryUrl>
     <PackageDescription>
       SSR.Net facilitates Server-Side Rendering (SSR) for React 17, React 18, React 19, and Vue 3 using JavaScriptEngineSwitcher.Core.
       It is open for extension to support other JavaScript frameworks.
@@ -40,9 +35,9 @@
   <ItemGroup>
     <PackageReference Include="JavaScriptEngineSwitcher.Core" Version="3.24.1" AllowedVersions="3.19,4.0)" />
     <PackageReference Include="JavaScriptEngineSwitcher.V8" Version="3.24.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
-    <PackageReference Include="System.Text.Json" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.3.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.1" />
+    <PackageReference Include="System.Text.Json" Version="9.0.1" />
   </ItemGroup>
 
   <ItemGroup>

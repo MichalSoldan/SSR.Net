@@ -1,6 +1,6 @@
 ﻿namespace SSR.Net.Services
 {
-    public class React19Renderer : ReactRendererBase
+    public class React19Renderer : ReactRendererBase, IReact19Renderer
     {
         public React19Renderer(IJavaScriptEnginePool javaScriptEnginePool) : base(javaScriptEnginePool)
         {

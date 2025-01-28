@@ -5,7 +5,7 @@ using System;
 
 namespace SSR.Net.Services
 {
-    public class Vue3Renderer : IVueRenderer
+    public class Vue3Renderer : IVue3Renderer
     {
         private readonly IJavaScriptEnginePool _javaScriptEnginePool;
 

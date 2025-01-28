@@ -14,7 +14,7 @@ namespace SSR.Net.Extensions
         {
             var pool = new JavaScriptEnginePool(new V8JsEngineFactory(), config);
 
-            services.AddSingleton<IVueRenderer>(new Vue3Renderer(pool));
+            services.AddSingleton<IVue3Renderer>(new Vue3Renderer(pool));
         }
     }
 }
