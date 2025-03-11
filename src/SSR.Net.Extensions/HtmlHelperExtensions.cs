@@ -74,15 +74,20 @@ namespace SSR.Net.Extensions
                 var sb = new StringBuilder();
 
                 sb.AppendLine(reactComponent?.Html);
-                sb.Append("<script>");
-                sb.Append(reactComponent?.InitScript);
-                sb.AppendLine("</script>");
+                //sb.Append("<script>");
+                //sb.Append(reactComponent?.InitScript);
+                //sb.AppendLine("</script>");
 
-                var content = new HtmlContentBuilder();
+                if (exceptionHandler != null && reactComponent.RenderException != null)
+                {
+                    exceptionHandler(reactComponent.RenderException, componentName, reactComponent.Html);
+                }
+                else if (exceptionHandler != null && reactComponent.TimeoutException != null)
+                {
+                    exceptionHandler(reactComponent.TimeoutException, componentName, reactComponent.Html);
+                }
 
-                content.AppendHtmlLine(sb.ToString());
-
-                return content;
+                return new HtmlString(sb.ToString());
             }
             catch (Exception ex)
             {
@@ -90,6 +95,7 @@ namespace SSR.Net.Extensions
             }
             return null;
         }
+
 
         ////
         //// Summary:
