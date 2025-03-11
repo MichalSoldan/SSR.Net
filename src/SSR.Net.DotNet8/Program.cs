@@ -20,6 +20,7 @@ builder.Services.AddReact19Renderer(config =>
         .AddScriptFile(Path.Combine(builder.Environment.WebRootPath, "React19TextEncoderPolyfill.js"))
         .AddScriptFile(Path.Combine(builder.Environment.WebRootPath, "React19MessageChannelPolyfill.js"))
         .AddScriptFile(Path.Combine(builder.Environment.WebRootPath, "react19example.js"))
+        //.AddScriptFile(Path.Combine(builder.Environment.WebRootPath, "react19example.js"))
 );
 
 builder.Services.AddVue3Renderer(config =>

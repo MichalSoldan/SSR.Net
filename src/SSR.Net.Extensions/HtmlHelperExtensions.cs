@@ -64,39 +64,19 @@ namespace SSR.Net.Extensions
 
                 if (clientOnly)
                 {
-                    reactComponent = renderer?.RenderComponentCSR(componentName, props);
+                    reactComponent = renderer?.RenderComponentCSR(componentName, props, containerClass, containerId, htmlTag);
                 }
                 else
                 {
-                    reactComponent = renderer?.RenderComponent(componentName, props, 50, !serverOnly);
+                    reactComponent = renderer?.RenderComponent(componentName, props, 50, !serverOnly, containerClass, containerId, htmlTag);
                 }
 
                 var sb = new StringBuilder();
 
-                if (!string.IsNullOrEmpty(htmlTag))
-                {
-                    sb.AppendFormat("<{0}", htmlTag);
-
-                    if (!string.IsNullOrWhiteSpace(containerClass))
-                    {
-                        sb.AppendFormat(" class=\"{0}\"", containerClass);
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(containerId))
-                    {
-                        sb.AppendFormat(" id=\"{0}\"", containerId);
-                    }
-
-                    sb.Append(">\n");
-
-                    sb.AppendLine(reactComponent?.Html);
-                    sb.AppendFormat("</{0}>\n", htmlTag);
-                }
-                else
-                {
-                    sb.AppendLine(reactComponent?.Html);
-                }
-
+                sb.AppendLine(reactComponent?.Html);
+                sb.Append("<script>");
+                sb.Append(reactComponent?.InitScript);
+                sb.AppendLine("</script>");
 
                 var content = new HtmlContentBuilder();
 
